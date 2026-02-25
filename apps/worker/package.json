@@ -2,14 +2,19 @@
   "name": "worker",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bun index.ts"
+  },
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/nodemailer": "^7.0.11"
   },
   "dependencies": {
-    "store": "workspace:*",
+    "axios": "^1.7.9",
+    "nodemailer": "^8.0.1",
     "redisstream": "workspace:*",
-    "axios": "^1.7.9"
+    "store": "workspace:*"
   },
   "peerDependencies": {
     "typescript": "^5"

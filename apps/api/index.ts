@@ -1,17 +1,28 @@
 // require("dotenv").config();
 import jwt from "jsonwebtoken";
 import express from "express"
+import cors from "cors";
 const app = express();
 import { prismaClient } from "store/client";
 import { AuthInput } from "./types";
 import { authMiddleware } from "./middleware";
 
-app.use(express.json());
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.path}`);
     next();
 });
+
+app.get("/health", (req, res) => {
+    res.json({ status: "ok" });
+});
+
+app.use(express.json());
 
 app.post("/website", authMiddleware, async (req, res) => {
     if (!req.body.url) {
@@ -30,6 +41,32 @@ app.post("/website", authMiddleware, async (req, res) => {
         id: website.id
     })
 });
+
+app.get("/websites", authMiddleware, async (req, res) => {
+    const websites = await prismaClient.website.findMany({
+        where: {
+            user_id: req.userId!
+        },
+        include: {
+            ticks: {
+                orderBy: {
+                    createdAt: 'desc'
+                },
+                take: 1
+            }
+        }
+    })
+
+    res.json({
+        websites: websites.map(w => ({
+            id: w.id,
+            url: w.url,
+            status: w.ticks[0]?.status || "Unknown",
+            responseTime: w.ticks[0]?.response_time_ms || 0,
+            lastChecked: w.ticks[0]?.createdAt || w.time_added
+        }))
+    })
+})
 
 app.get("/status/:websiteId", authMiddleware, async (req, res) => {
     const website = await prismaClient.website.findFirst({
