@@ -1,7 +1,8 @@
 import axios from "axios";
-import { xAckBulk, xReadGroup } from "redisstream/client";
+import { xAckBulk, xReadGroup, createGroup } from "redisstream/client";
 import { prismaClient } from "store/client";
 import { sendEmailAlert } from "./notifier";
+
 
 const REGION_ID = process.env.REGION_ID!;
 const WORKER_ID = process.env.WORKER_ID!;
@@ -15,11 +16,21 @@ if (!WORKER_ID) {
 }
 
 async function main() {
+    // Ensure the consumer group exists
+    try {
+        await createGroup(REGION_ID);
+        console.log(`Consumer group ${REGION_ID} verified/created.`);
+    } catch (e) {
+        // Log but continue (may already exist)
+    }
+
     while (1) {
         try {
             const response = await xReadGroup(REGION_ID, WORKER_ID);
 
-            if (!response) {
+            if (!response || response.length === 0) {
+                // Short sleep before next poll if no tasks
+                await new Promise(r => setTimeout(r, 2000));
                 continue;
             }
 
@@ -37,7 +48,6 @@ async function main() {
 }
 
 async function fetchWebsite(url: string, websiteId: string) {
-    console.log(`  Checking: ${url}`);
     const startTime = Date.now();
     let newStatus: "Up" | "Down";
     let errorMsg = "";
@@ -59,37 +69,38 @@ async function fetchWebsite(url: string, websiteId: string) {
         const lastTick = await prismaClient.website_tick.findFirst({
             where: { website_id: websiteId },
             orderBy: { createdAt: "desc" },
-            include: {
-                website: {
-                    include: { user: true }
-                }
-            }
         });
 
         // 2. Determine if we should send an alert
-        // We alert if: 
+        // We alert if:
         // - This is the first check and it's Down
         // - The status changed (Up -> Down or Down -> Up)
         const isFirstCheck = !lastTick;
         const statusChanged = lastTick && lastTick.status !== newStatus;
 
-        console.log(`    DEBUG: isFirstCheck=${isFirstCheck}, statusChanged=${statusChanged}, newStatus=${newStatus}, oldStatus=${lastTick?.status}`);
-
         if ((isFirstCheck && newStatus === "Down") || statusChanged) {
-            // Need to fetch user email if it's not in lastTick (e.g. if isFirstCheck is true)
-            let email = lastTick?.website.user.username;
+            // Fetch the website owner + all alert contacts in one query
+            const site = await prismaClient.website.findUnique({
+                where: { id: websiteId },
+                include: {
+                    user: true,
+                    alerts: true,   // all added alert contacts
+                }
+            });
 
-            if (!email) {
-                const site = await prismaClient.website.findUnique({
-                    where: { id: websiteId },
-                    include: { user: true }
-                });
-                email = site?.user.username;
-            }
+            if (site) {
+                // Build a unique set of recipient emails:
+                // owner (username field is their email) + all alert contacts
+                const recipients = new Set<string>();
+                recipients.add(site.user.username);           // owner
+                site.alerts.forEach(a => recipients.add(a.email)); // extra contacts
 
-            if (email) {
-                console.log(`    State change detected! Sending ${newStatus} notification to ${email}...`);
-                await sendEmailAlert(email, url, newStatus);
+                console.log(`State change detected! Notifying ${recipients.size} recipient(s): ${Array.from(recipients).join(", ")}`);
+
+                // Send email to every recipient
+                await Promise.all(
+                    Array.from(recipients).map(email => sendEmailAlert(email, url, newStatus))
+                );
             }
         }
 

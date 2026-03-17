@@ -99,6 +99,55 @@ app.get("/status/:websiteId", authMiddleware, async (req, res) => {
 
 })
 
+// --- Alert Contacts ---
+
+// GET /website/:websiteId/alerts  → list all alert emails for a website
+app.get("/website/:websiteId/alerts", authMiddleware, async (req, res) => {
+    const websiteId = req.params.websiteId as string;
+    const website = await prismaClient.website.findFirst({
+        where: { id: websiteId, user_id: req.userId! },
+        include: { alerts: true }
+    });
+    if (!website) { res.status(404).json({ message: "Not found" }); return; }
+
+    res.json({ alerts: website.alerts.map((a: { id: string; email: string }) => ({ id: a.id, email: a.email })) });
+});
+
+// POST /website/:websiteId/alerts  { email: "..." }  → add an alert contact
+app.post("/website/:websiteId/alerts", authMiddleware, async (req, res) => {
+    const websiteId = req.params.websiteId as string;
+    const { email } = req.body;
+    if (!email) { res.status(400).json({ message: "email is required" }); return; }
+
+    const website = await prismaClient.website.findFirst({
+        where: { id: websiteId, user_id: req.userId! }
+    });
+    if (!website) { res.status(404).json({ message: "Not found" }); return; }
+
+    try {
+        const alert = await prismaClient.website_alert.create({
+            data: { email, website_id: websiteId }
+        });
+        res.json({ id: alert.id, email: alert.email });
+    } catch (e: any) {
+        res.status(409).json({ message: "This email is already an alert contact." });
+    }
+});
+
+// DELETE /website/:websiteId/alerts/:alertId  → remove an alert contact
+app.delete("/website/:websiteId/alerts/:alertId", authMiddleware, async (req, res) => {
+    const websiteId = req.params.websiteId as string;
+    const alertId = req.params.alertId as string;
+
+    const website = await prismaClient.website.findFirst({
+        where: { id: websiteId, user_id: req.userId! }
+    });
+    if (!website) { res.status(404).json({ message: "Not found" }); return; }
+
+    await prismaClient.website_alert.delete({ where: { id: alertId } });
+    res.json({ message: "Alert contact removed." });
+});
+
 app.post("/user/signup", async (req, res) => {
     const data = AuthInput.safeParse(req.body);
     if (!data.success) {

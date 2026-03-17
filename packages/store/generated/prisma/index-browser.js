@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.4.0
- * Query Engine version: ab56fe763f921d033a6c195e7ddeb3e255bdbb57
+ * Prisma Client JS version: 7.4.2
+ * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
  */
 Prisma.prismaVersion = {
-  client: "7.4.0",
-  engine: "ab56fe763f921d033a6c195e7ddeb3e255bdbb57"
+  client: "7.4.2",
+  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -133,6 +133,12 @@ exports.Prisma.WebsiteScalarFieldEnum = {
   time_added: 'time_added'
 };
 
+exports.Prisma.Website_alertScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  website_id: 'website_id'
+};
+
 exports.Prisma.RegionScalarFieldEnum = {
   id: 'id',
   name: 'name'
@@ -165,6 +171,7 @@ exports.website_status = exports.$Enums.website_status = {
 exports.Prisma.ModelName = {
   user: 'user',
   website: 'website',
+  website_alert: 'website_alert',
   region: 'region',
   website_tick: 'website_tick'
 };

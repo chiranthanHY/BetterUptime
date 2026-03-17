@@ -1,7 +1,5 @@
 import nodemailer from "nodemailer";
 
-// In a real app, you would use an environment variable for your SMTP settings or API key
-// For this demo, we'll use a mock logger that simulates sending an email.
 const isEmailEnabled = process.env.EMAIL_ENABLED === "true";
 
 export async function sendEmailAlert(targetEmail: string, websiteUrl: string, status: "Up" | "Down") {
@@ -20,28 +18,29 @@ export async function sendEmailAlert(targetEmail: string, websiteUrl: string, st
     console.log(`---------------------------\n`);
 
     if (isEmailEnabled) {
-        // Example configuration for a real SMTP server (like Gmail, Resend, or Mailgun)
+        const senderEmail = process.env.SMTP_USER!;
+
         const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST || "smtp.example.com",
+            host: process.env.SMTP_HOST || "smtp.gmail.com",
             port: Number(process.env.SMTP_PORT) || 587,
             secure: false,
             auth: {
-                user: process.env.SMTP_USER,
+                user: senderEmail,
                 pass: process.env.SMTP_PASS,
             },
         });
 
         try {
             await transporter.sendMail({
-                from: '"BetterUptime Monitoring" <alerts@betteruptime.com>',
+                from: `"BetterUptime Monitoring" <${senderEmail}>`,  // must match SMTP_USER for Gmail
                 to: targetEmail,
                 subject: subject,
                 text: body,
                 html: `<p>${body}</p>`,
             });
-            console.log(`Real email sent to ${targetEmail}`);
+            console.log(`✅ Real email sent to ${targetEmail}`);
         } catch (error) {
-            console.error("Failed to send real email:", error);
+            console.error(`❌ Failed to send email to ${targetEmail}:`, error);
         }
     }
 }

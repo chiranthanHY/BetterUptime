@@ -51,6 +51,18 @@ export async function xReadGroup(consumerGroup: string, workerId: string): Promi
     return messages;
 }
 
+export async function createGroup(consumerGroup: string) {
+    try {
+        await client.xGroupCreate(STREAM_NAME, consumerGroup, '0', {
+            MKSTREAM: true
+        });
+    } catch (e: any) {
+        if (!e.message.includes("BUSYGROUP")) {
+            throw e;
+        }
+    }
+}
+
 async function xAck(consumerGroup: string, eventId: string) {
     await client.xAck(STREAM_NAME, consumerGroup, eventId)
 }

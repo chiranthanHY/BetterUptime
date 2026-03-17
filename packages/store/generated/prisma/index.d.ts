@@ -24,6 +24,11 @@ export type user = $Result.DefaultSelection<Prisma.$userPayload>
  */
 export type website = $Result.DefaultSelection<Prisma.$websitePayload>
 /**
+ * Model website_alert
+ * 
+ */
+export type website_alert = $Result.DefaultSelection<Prisma.$website_alertPayload>
+/**
  * Model region
  * 
  */
@@ -58,7 +63,9 @@ export const website_status: typeof $Enums.website_status
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Users
  * const users = await prisma.user.findMany()
  * ```
@@ -79,7 +86,9 @@ export class PrismaClient<
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Users
    * const users = await prisma.user.findMany()
    * ```
@@ -159,7 +168,7 @@ export class PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
@@ -188,6 +197,16 @@ export class PrismaClient<
     * ```
     */
   get website(): Prisma.websiteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.website_alert`: Exposes CRUD operations for the **website_alert** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Website_alerts
+    * const website_alerts = await prisma.website_alert.findMany()
+    * ```
+    */
+  get website_alert(): Prisma.website_alertDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.region`: Exposes CRUD operations for the **region** model.
@@ -258,8 +277,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.4.0
-   * Query Engine version: ab56fe763f921d033a6c195e7ddeb3e255bdbb57
+   * Prisma Client JS version: 7.4.2
+   * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
    */
   export type PrismaVersion = {
     client: string
@@ -644,6 +663,7 @@ export namespace Prisma {
   export const ModelName: {
     user: 'user',
     website: 'website',
+    website_alert: 'website_alert',
     region: 'region',
     website_tick: 'website_tick'
   };
@@ -661,7 +681,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "website" | "region" | "website_tick"
+      modelProps: "user" | "website" | "website_alert" | "region" | "website_tick"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -810,6 +830,80 @@ export namespace Prisma {
           count: {
             args: Prisma.websiteCountArgs<ExtArgs>
             result: $Utils.Optional<WebsiteCountAggregateOutputType> | number
+          }
+        }
+      }
+      website_alert: {
+        payload: Prisma.$website_alertPayload<ExtArgs>
+        fields: Prisma.website_alertFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.website_alertFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.website_alertFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload>
+          }
+          findFirst: {
+            args: Prisma.website_alertFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.website_alertFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload>
+          }
+          findMany: {
+            args: Prisma.website_alertFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload>[]
+          }
+          create: {
+            args: Prisma.website_alertCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload>
+          }
+          createMany: {
+            args: Prisma.website_alertCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.website_alertCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload>[]
+          }
+          delete: {
+            args: Prisma.website_alertDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload>
+          }
+          update: {
+            args: Prisma.website_alertUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload>
+          }
+          deleteMany: {
+            args: Prisma.website_alertDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.website_alertUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.website_alertUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload>[]
+          }
+          upsert: {
+            args: Prisma.website_alertUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$website_alertPayload>
+          }
+          aggregate: {
+            args: Prisma.Website_alertAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWebsite_alert>
+          }
+          groupBy: {
+            args: Prisma.website_alertGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Website_alertGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.website_alertCountArgs<ExtArgs>
+            result: $Utils.Optional<Website_alertCountAggregateOutputType> | number
           }
         }
       }
@@ -1071,6 +1165,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: userOmit
     website?: websiteOmit
+    website_alert?: website_alertOmit
     region?: regionOmit
     website_tick?: website_tickOmit
   }
@@ -1184,10 +1279,12 @@ export namespace Prisma {
    */
 
   export type WebsiteCountOutputType = {
+    alerts: number
     ticks: number
   }
 
   export type WebsiteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    alerts?: boolean | WebsiteCountOutputTypeCountAlertsArgs
     ticks?: boolean | WebsiteCountOutputTypeCountTicksArgs
   }
 
@@ -1200,6 +1297,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the WebsiteCountOutputType
      */
     select?: WebsiteCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * WebsiteCountOutputType without action
+   */
+  export type WebsiteCountOutputTypeCountAlertsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: website_alertWhereInput
   }
 
   /**
@@ -2445,8 +2549,9 @@ export namespace Prisma {
     url?: boolean
     user_id?: boolean
     time_added?: boolean
-    ticks?: boolean | website$ticksArgs<ExtArgs>
     user?: boolean | userDefaultArgs<ExtArgs>
+    alerts?: boolean | website$alertsArgs<ExtArgs>
+    ticks?: boolean | website$ticksArgs<ExtArgs>
     _count?: boolean | WebsiteCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["website"]>
 
@@ -2475,8 +2580,9 @@ export namespace Prisma {
 
   export type websiteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "user_id" | "time_added", ExtArgs["result"]["website"]>
   export type websiteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    ticks?: boolean | website$ticksArgs<ExtArgs>
     user?: boolean | userDefaultArgs<ExtArgs>
+    alerts?: boolean | website$alertsArgs<ExtArgs>
+    ticks?: boolean | website$ticksArgs<ExtArgs>
     _count?: boolean | WebsiteCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type websiteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2489,8 +2595,9 @@ export namespace Prisma {
   export type $websitePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "website"
     objects: {
-      ticks: Prisma.$website_tickPayload<ExtArgs>[]
       user: Prisma.$userPayload<ExtArgs>
+      alerts: Prisma.$website_alertPayload<ExtArgs>[]
+      ticks: Prisma.$website_tickPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2891,8 +2998,9 @@ export namespace Prisma {
    */
   export interface Prisma__websiteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    ticks<T extends website$ticksArgs<ExtArgs> = {}>(args?: Subset<T, website$ticksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$website_tickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends userDefaultArgs<ExtArgs> = {}>(args?: Subset<T, userDefaultArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    alerts<T extends website$alertsArgs<ExtArgs> = {}>(args?: Subset<T, website$alertsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ticks<T extends website$ticksArgs<ExtArgs> = {}>(args?: Subset<T, website$ticksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$website_tickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3322,6 +3430,30 @@ export namespace Prisma {
   }
 
   /**
+   * website.alerts
+   */
+  export type website$alertsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    where?: website_alertWhereInput
+    orderBy?: website_alertOrderByWithRelationInput | website_alertOrderByWithRelationInput[]
+    cursor?: website_alertWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Website_alertScalarFieldEnum | Website_alertScalarFieldEnum[]
+  }
+
+  /**
    * website.ticks
    */
   export type website$ticksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3361,6 +3493,1038 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: websiteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model website_alert
+   */
+
+  export type AggregateWebsite_alert = {
+    _count: Website_alertCountAggregateOutputType | null
+    _min: Website_alertMinAggregateOutputType | null
+    _max: Website_alertMaxAggregateOutputType | null
+  }
+
+  export type Website_alertMinAggregateOutputType = {
+    id: string | null
+    email: string | null
+    website_id: string | null
+  }
+
+  export type Website_alertMaxAggregateOutputType = {
+    id: string | null
+    email: string | null
+    website_id: string | null
+  }
+
+  export type Website_alertCountAggregateOutputType = {
+    id: number
+    email: number
+    website_id: number
+    _all: number
+  }
+
+
+  export type Website_alertMinAggregateInputType = {
+    id?: true
+    email?: true
+    website_id?: true
+  }
+
+  export type Website_alertMaxAggregateInputType = {
+    id?: true
+    email?: true
+    website_id?: true
+  }
+
+  export type Website_alertCountAggregateInputType = {
+    id?: true
+    email?: true
+    website_id?: true
+    _all?: true
+  }
+
+  export type Website_alertAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which website_alert to aggregate.
+     */
+    where?: website_alertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of website_alerts to fetch.
+     */
+    orderBy?: website_alertOrderByWithRelationInput | website_alertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: website_alertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` website_alerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` website_alerts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned website_alerts
+    **/
+    _count?: true | Website_alertCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Website_alertMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Website_alertMaxAggregateInputType
+  }
+
+  export type GetWebsite_alertAggregateType<T extends Website_alertAggregateArgs> = {
+        [P in keyof T & keyof AggregateWebsite_alert]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWebsite_alert[P]>
+      : GetScalarType<T[P], AggregateWebsite_alert[P]>
+  }
+
+
+
+
+  export type website_alertGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: website_alertWhereInput
+    orderBy?: website_alertOrderByWithAggregationInput | website_alertOrderByWithAggregationInput[]
+    by: Website_alertScalarFieldEnum[] | Website_alertScalarFieldEnum
+    having?: website_alertScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Website_alertCountAggregateInputType | true
+    _min?: Website_alertMinAggregateInputType
+    _max?: Website_alertMaxAggregateInputType
+  }
+
+  export type Website_alertGroupByOutputType = {
+    id: string
+    email: string
+    website_id: string
+    _count: Website_alertCountAggregateOutputType | null
+    _min: Website_alertMinAggregateOutputType | null
+    _max: Website_alertMaxAggregateOutputType | null
+  }
+
+  type GetWebsite_alertGroupByPayload<T extends website_alertGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Website_alertGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Website_alertGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Website_alertGroupByOutputType[P]>
+            : GetScalarType<T[P], Website_alertGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type website_alertSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    website_id?: boolean
+    website?: boolean | websiteDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["website_alert"]>
+
+  export type website_alertSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    website_id?: boolean
+    website?: boolean | websiteDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["website_alert"]>
+
+  export type website_alertSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    website_id?: boolean
+    website?: boolean | websiteDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["website_alert"]>
+
+  export type website_alertSelectScalar = {
+    id?: boolean
+    email?: boolean
+    website_id?: boolean
+  }
+
+  export type website_alertOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "website_id", ExtArgs["result"]["website_alert"]>
+  export type website_alertInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    website?: boolean | websiteDefaultArgs<ExtArgs>
+  }
+  export type website_alertIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    website?: boolean | websiteDefaultArgs<ExtArgs>
+  }
+  export type website_alertIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    website?: boolean | websiteDefaultArgs<ExtArgs>
+  }
+
+  export type $website_alertPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "website_alert"
+    objects: {
+      website: Prisma.$websitePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      email: string
+      website_id: string
+    }, ExtArgs["result"]["website_alert"]>
+    composites: {}
+  }
+
+  type website_alertGetPayload<S extends boolean | null | undefined | website_alertDefaultArgs> = $Result.GetResult<Prisma.$website_alertPayload, S>
+
+  type website_alertCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<website_alertFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Website_alertCountAggregateInputType | true
+    }
+
+  export interface website_alertDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['website_alert'], meta: { name: 'website_alert' } }
+    /**
+     * Find zero or one Website_alert that matches the filter.
+     * @param {website_alertFindUniqueArgs} args - Arguments to find a Website_alert
+     * @example
+     * // Get one Website_alert
+     * const website_alert = await prisma.website_alert.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends website_alertFindUniqueArgs>(args: SelectSubset<T, website_alertFindUniqueArgs<ExtArgs>>): Prisma__website_alertClient<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Website_alert that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {website_alertFindUniqueOrThrowArgs} args - Arguments to find a Website_alert
+     * @example
+     * // Get one Website_alert
+     * const website_alert = await prisma.website_alert.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends website_alertFindUniqueOrThrowArgs>(args: SelectSubset<T, website_alertFindUniqueOrThrowArgs<ExtArgs>>): Prisma__website_alertClient<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Website_alert that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {website_alertFindFirstArgs} args - Arguments to find a Website_alert
+     * @example
+     * // Get one Website_alert
+     * const website_alert = await prisma.website_alert.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends website_alertFindFirstArgs>(args?: SelectSubset<T, website_alertFindFirstArgs<ExtArgs>>): Prisma__website_alertClient<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Website_alert that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {website_alertFindFirstOrThrowArgs} args - Arguments to find a Website_alert
+     * @example
+     * // Get one Website_alert
+     * const website_alert = await prisma.website_alert.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends website_alertFindFirstOrThrowArgs>(args?: SelectSubset<T, website_alertFindFirstOrThrowArgs<ExtArgs>>): Prisma__website_alertClient<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Website_alerts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {website_alertFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Website_alerts
+     * const website_alerts = await prisma.website_alert.findMany()
+     * 
+     * // Get first 10 Website_alerts
+     * const website_alerts = await prisma.website_alert.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const website_alertWithIdOnly = await prisma.website_alert.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends website_alertFindManyArgs>(args?: SelectSubset<T, website_alertFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Website_alert.
+     * @param {website_alertCreateArgs} args - Arguments to create a Website_alert.
+     * @example
+     * // Create one Website_alert
+     * const Website_alert = await prisma.website_alert.create({
+     *   data: {
+     *     // ... data to create a Website_alert
+     *   }
+     * })
+     * 
+     */
+    create<T extends website_alertCreateArgs>(args: SelectSubset<T, website_alertCreateArgs<ExtArgs>>): Prisma__website_alertClient<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Website_alerts.
+     * @param {website_alertCreateManyArgs} args - Arguments to create many Website_alerts.
+     * @example
+     * // Create many Website_alerts
+     * const website_alert = await prisma.website_alert.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends website_alertCreateManyArgs>(args?: SelectSubset<T, website_alertCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Website_alerts and returns the data saved in the database.
+     * @param {website_alertCreateManyAndReturnArgs} args - Arguments to create many Website_alerts.
+     * @example
+     * // Create many Website_alerts
+     * const website_alert = await prisma.website_alert.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Website_alerts and only return the `id`
+     * const website_alertWithIdOnly = await prisma.website_alert.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends website_alertCreateManyAndReturnArgs>(args?: SelectSubset<T, website_alertCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Website_alert.
+     * @param {website_alertDeleteArgs} args - Arguments to delete one Website_alert.
+     * @example
+     * // Delete one Website_alert
+     * const Website_alert = await prisma.website_alert.delete({
+     *   where: {
+     *     // ... filter to delete one Website_alert
+     *   }
+     * })
+     * 
+     */
+    delete<T extends website_alertDeleteArgs>(args: SelectSubset<T, website_alertDeleteArgs<ExtArgs>>): Prisma__website_alertClient<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Website_alert.
+     * @param {website_alertUpdateArgs} args - Arguments to update one Website_alert.
+     * @example
+     * // Update one Website_alert
+     * const website_alert = await prisma.website_alert.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends website_alertUpdateArgs>(args: SelectSubset<T, website_alertUpdateArgs<ExtArgs>>): Prisma__website_alertClient<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Website_alerts.
+     * @param {website_alertDeleteManyArgs} args - Arguments to filter Website_alerts to delete.
+     * @example
+     * // Delete a few Website_alerts
+     * const { count } = await prisma.website_alert.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends website_alertDeleteManyArgs>(args?: SelectSubset<T, website_alertDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Website_alerts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {website_alertUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Website_alerts
+     * const website_alert = await prisma.website_alert.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends website_alertUpdateManyArgs>(args: SelectSubset<T, website_alertUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Website_alerts and returns the data updated in the database.
+     * @param {website_alertUpdateManyAndReturnArgs} args - Arguments to update many Website_alerts.
+     * @example
+     * // Update many Website_alerts
+     * const website_alert = await prisma.website_alert.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Website_alerts and only return the `id`
+     * const website_alertWithIdOnly = await prisma.website_alert.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends website_alertUpdateManyAndReturnArgs>(args: SelectSubset<T, website_alertUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Website_alert.
+     * @param {website_alertUpsertArgs} args - Arguments to update or create a Website_alert.
+     * @example
+     * // Update or create a Website_alert
+     * const website_alert = await prisma.website_alert.upsert({
+     *   create: {
+     *     // ... data to create a Website_alert
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Website_alert we want to update
+     *   }
+     * })
+     */
+    upsert<T extends website_alertUpsertArgs>(args: SelectSubset<T, website_alertUpsertArgs<ExtArgs>>): Prisma__website_alertClient<$Result.GetResult<Prisma.$website_alertPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Website_alerts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {website_alertCountArgs} args - Arguments to filter Website_alerts to count.
+     * @example
+     * // Count the number of Website_alerts
+     * const count = await prisma.website_alert.count({
+     *   where: {
+     *     // ... the filter for the Website_alerts we want to count
+     *   }
+     * })
+    **/
+    count<T extends website_alertCountArgs>(
+      args?: Subset<T, website_alertCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Website_alertCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Website_alert.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Website_alertAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Website_alertAggregateArgs>(args: Subset<T, Website_alertAggregateArgs>): Prisma.PrismaPromise<GetWebsite_alertAggregateType<T>>
+
+    /**
+     * Group by Website_alert.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {website_alertGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends website_alertGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: website_alertGroupByArgs['orderBy'] }
+        : { orderBy?: website_alertGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, website_alertGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWebsite_alertGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the website_alert model
+   */
+  readonly fields: website_alertFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for website_alert.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__website_alertClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    website<T extends websiteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, websiteDefaultArgs<ExtArgs>>): Prisma__websiteClient<$Result.GetResult<Prisma.$websitePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the website_alert model
+   */
+  interface website_alertFieldRefs {
+    readonly id: FieldRef<"website_alert", 'String'>
+    readonly email: FieldRef<"website_alert", 'String'>
+    readonly website_id: FieldRef<"website_alert", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * website_alert findUnique
+   */
+  export type website_alertFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    /**
+     * Filter, which website_alert to fetch.
+     */
+    where: website_alertWhereUniqueInput
+  }
+
+  /**
+   * website_alert findUniqueOrThrow
+   */
+  export type website_alertFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    /**
+     * Filter, which website_alert to fetch.
+     */
+    where: website_alertWhereUniqueInput
+  }
+
+  /**
+   * website_alert findFirst
+   */
+  export type website_alertFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    /**
+     * Filter, which website_alert to fetch.
+     */
+    where?: website_alertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of website_alerts to fetch.
+     */
+    orderBy?: website_alertOrderByWithRelationInput | website_alertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for website_alerts.
+     */
+    cursor?: website_alertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` website_alerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` website_alerts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of website_alerts.
+     */
+    distinct?: Website_alertScalarFieldEnum | Website_alertScalarFieldEnum[]
+  }
+
+  /**
+   * website_alert findFirstOrThrow
+   */
+  export type website_alertFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    /**
+     * Filter, which website_alert to fetch.
+     */
+    where?: website_alertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of website_alerts to fetch.
+     */
+    orderBy?: website_alertOrderByWithRelationInput | website_alertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for website_alerts.
+     */
+    cursor?: website_alertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` website_alerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` website_alerts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of website_alerts.
+     */
+    distinct?: Website_alertScalarFieldEnum | Website_alertScalarFieldEnum[]
+  }
+
+  /**
+   * website_alert findMany
+   */
+  export type website_alertFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    /**
+     * Filter, which website_alerts to fetch.
+     */
+    where?: website_alertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of website_alerts to fetch.
+     */
+    orderBy?: website_alertOrderByWithRelationInput | website_alertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing website_alerts.
+     */
+    cursor?: website_alertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` website_alerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` website_alerts.
+     */
+    skip?: number
+    distinct?: Website_alertScalarFieldEnum | Website_alertScalarFieldEnum[]
+  }
+
+  /**
+   * website_alert create
+   */
+  export type website_alertCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    /**
+     * The data needed to create a website_alert.
+     */
+    data: XOR<website_alertCreateInput, website_alertUncheckedCreateInput>
+  }
+
+  /**
+   * website_alert createMany
+   */
+  export type website_alertCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many website_alerts.
+     */
+    data: website_alertCreateManyInput | website_alertCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * website_alert createManyAndReturn
+   */
+  export type website_alertCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * The data used to create many website_alerts.
+     */
+    data: website_alertCreateManyInput | website_alertCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * website_alert update
+   */
+  export type website_alertUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    /**
+     * The data needed to update a website_alert.
+     */
+    data: XOR<website_alertUpdateInput, website_alertUncheckedUpdateInput>
+    /**
+     * Choose, which website_alert to update.
+     */
+    where: website_alertWhereUniqueInput
+  }
+
+  /**
+   * website_alert updateMany
+   */
+  export type website_alertUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update website_alerts.
+     */
+    data: XOR<website_alertUpdateManyMutationInput, website_alertUncheckedUpdateManyInput>
+    /**
+     * Filter which website_alerts to update
+     */
+    where?: website_alertWhereInput
+    /**
+     * Limit how many website_alerts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * website_alert updateManyAndReturn
+   */
+  export type website_alertUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * The data used to update website_alerts.
+     */
+    data: XOR<website_alertUpdateManyMutationInput, website_alertUncheckedUpdateManyInput>
+    /**
+     * Filter which website_alerts to update
+     */
+    where?: website_alertWhereInput
+    /**
+     * Limit how many website_alerts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * website_alert upsert
+   */
+  export type website_alertUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    /**
+     * The filter to search for the website_alert to update in case it exists.
+     */
+    where: website_alertWhereUniqueInput
+    /**
+     * In case the website_alert found by the `where` argument doesn't exist, create a new website_alert with this data.
+     */
+    create: XOR<website_alertCreateInput, website_alertUncheckedCreateInput>
+    /**
+     * In case the website_alert was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<website_alertUpdateInput, website_alertUncheckedUpdateInput>
+  }
+
+  /**
+   * website_alert delete
+   */
+  export type website_alertDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
+    /**
+     * Filter which website_alert to delete.
+     */
+    where: website_alertWhereUniqueInput
+  }
+
+  /**
+   * website_alert deleteMany
+   */
+  export type website_alertDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which website_alerts to delete
+     */
+    where?: website_alertWhereInput
+    /**
+     * Limit how many website_alerts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * website_alert without action
+   */
+  export type website_alertDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the website_alert
+     */
+    select?: website_alertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the website_alert
+     */
+    omit?: website_alertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: website_alertInclude<ExtArgs> | null
   }
 
 
@@ -5541,6 +6705,15 @@ export namespace Prisma {
   export type WebsiteScalarFieldEnum = (typeof WebsiteScalarFieldEnum)[keyof typeof WebsiteScalarFieldEnum]
 
 
+  export const Website_alertScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    website_id: 'website_id'
+  };
+
+  export type Website_alertScalarFieldEnum = (typeof Website_alertScalarFieldEnum)[keyof typeof Website_alertScalarFieldEnum]
+
+
   export const RegionScalarFieldEnum: {
     id: 'id',
     name: 'name'
@@ -5708,8 +6881,9 @@ export namespace Prisma {
     url?: StringFilter<"website"> | string
     user_id?: StringFilter<"website"> | string
     time_added?: DateTimeFilter<"website"> | Date | string
-    ticks?: Website_tickListRelationFilter
     user?: XOR<UserScalarRelationFilter, userWhereInput>
+    alerts?: Website_alertListRelationFilter
+    ticks?: Website_tickListRelationFilter
   }
 
   export type websiteOrderByWithRelationInput = {
@@ -5717,8 +6891,9 @@ export namespace Prisma {
     url?: SortOrder
     user_id?: SortOrder
     time_added?: SortOrder
-    ticks?: website_tickOrderByRelationAggregateInput
     user?: userOrderByWithRelationInput
+    alerts?: website_alertOrderByRelationAggregateInput
+    ticks?: website_tickOrderByRelationAggregateInput
   }
 
   export type websiteWhereUniqueInput = Prisma.AtLeast<{
@@ -5729,8 +6904,9 @@ export namespace Prisma {
     url?: StringFilter<"website"> | string
     user_id?: StringFilter<"website"> | string
     time_added?: DateTimeFilter<"website"> | Date | string
-    ticks?: Website_tickListRelationFilter
     user?: XOR<UserScalarRelationFilter, userWhereInput>
+    alerts?: Website_alertListRelationFilter
+    ticks?: Website_tickListRelationFilter
   }, "id">
 
   export type websiteOrderByWithAggregationInput = {
@@ -5751,6 +6927,52 @@ export namespace Prisma {
     url?: StringWithAggregatesFilter<"website"> | string
     user_id?: StringWithAggregatesFilter<"website"> | string
     time_added?: DateTimeWithAggregatesFilter<"website"> | Date | string
+  }
+
+  export type website_alertWhereInput = {
+    AND?: website_alertWhereInput | website_alertWhereInput[]
+    OR?: website_alertWhereInput[]
+    NOT?: website_alertWhereInput | website_alertWhereInput[]
+    id?: StringFilter<"website_alert"> | string
+    email?: StringFilter<"website_alert"> | string
+    website_id?: StringFilter<"website_alert"> | string
+    website?: XOR<WebsiteScalarRelationFilter, websiteWhereInput>
+  }
+
+  export type website_alertOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    website_id?: SortOrder
+    website?: websiteOrderByWithRelationInput
+  }
+
+  export type website_alertWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email_website_id?: website_alertEmailWebsite_idCompoundUniqueInput
+    AND?: website_alertWhereInput | website_alertWhereInput[]
+    OR?: website_alertWhereInput[]
+    NOT?: website_alertWhereInput | website_alertWhereInput[]
+    email?: StringFilter<"website_alert"> | string
+    website_id?: StringFilter<"website_alert"> | string
+    website?: XOR<WebsiteScalarRelationFilter, websiteWhereInput>
+  }, "id" | "email_website_id">
+
+  export type website_alertOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    website_id?: SortOrder
+    _count?: website_alertCountOrderByAggregateInput
+    _max?: website_alertMaxOrderByAggregateInput
+    _min?: website_alertMinOrderByAggregateInput
+  }
+
+  export type website_alertScalarWhereWithAggregatesInput = {
+    AND?: website_alertScalarWhereWithAggregatesInput | website_alertScalarWhereWithAggregatesInput[]
+    OR?: website_alertScalarWhereWithAggregatesInput[]
+    NOT?: website_alertScalarWhereWithAggregatesInput | website_alertScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"website_alert"> | string
+    email?: StringWithAggregatesFilter<"website_alert"> | string
+    website_id?: StringWithAggregatesFilter<"website_alert"> | string
   }
 
   export type regionWhereInput = {
@@ -5908,8 +7130,9 @@ export namespace Prisma {
     id?: string
     url: string
     time_added: Date | string
-    ticks?: website_tickCreateNestedManyWithoutWebsiteInput
     user: userCreateNestedOneWithoutWebsitesInput
+    alerts?: website_alertCreateNestedManyWithoutWebsiteInput
+    ticks?: website_tickCreateNestedManyWithoutWebsiteInput
   }
 
   export type websiteUncheckedCreateInput = {
@@ -5917,6 +7140,7 @@ export namespace Prisma {
     url: string
     user_id: string
     time_added: Date | string
+    alerts?: website_alertUncheckedCreateNestedManyWithoutWebsiteInput
     ticks?: website_tickUncheckedCreateNestedManyWithoutWebsiteInput
   }
 
@@ -5924,8 +7148,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     time_added?: DateTimeFieldUpdateOperationsInput | Date | string
-    ticks?: website_tickUpdateManyWithoutWebsiteNestedInput
     user?: userUpdateOneRequiredWithoutWebsitesNestedInput
+    alerts?: website_alertUpdateManyWithoutWebsiteNestedInput
+    ticks?: website_tickUpdateManyWithoutWebsiteNestedInput
   }
 
   export type websiteUncheckedUpdateInput = {
@@ -5933,6 +7158,7 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     time_added?: DateTimeFieldUpdateOperationsInput | Date | string
+    alerts?: website_alertUncheckedUpdateManyWithoutWebsiteNestedInput
     ticks?: website_tickUncheckedUpdateManyWithoutWebsiteNestedInput
   }
 
@@ -5954,6 +7180,47 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     time_added?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type website_alertCreateInput = {
+    id?: string
+    email: string
+    website: websiteCreateNestedOneWithoutAlertsInput
+  }
+
+  export type website_alertUncheckedCreateInput = {
+    id?: string
+    email: string
+    website_id: string
+  }
+
+  export type website_alertUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    website?: websiteUpdateOneRequiredWithoutAlertsNestedInput
+  }
+
+  export type website_alertUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    website_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type website_alertCreateManyInput = {
+    id?: string
+    email: string
+    website_id: string
+  }
+
+  export type website_alertUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type website_alertUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    website_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type regionCreateInput = {
@@ -6128,15 +7395,25 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type UserScalarRelationFilter = {
+    is?: userWhereInput
+    isNot?: userWhereInput
+  }
+
+  export type Website_alertListRelationFilter = {
+    every?: website_alertWhereInput
+    some?: website_alertWhereInput
+    none?: website_alertWhereInput
+  }
+
   export type Website_tickListRelationFilter = {
     every?: website_tickWhereInput
     some?: website_tickWhereInput
     none?: website_tickWhereInput
   }
 
-  export type UserScalarRelationFilter = {
-    is?: userWhereInput
-    isNot?: userWhereInput
+  export type website_alertOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type website_tickOrderByRelationAggregateInput = {
@@ -6178,6 +7455,34 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type WebsiteScalarRelationFilter = {
+    is?: websiteWhereInput
+    isNot?: websiteWhereInput
+  }
+
+  export type website_alertEmailWebsite_idCompoundUniqueInput = {
+    email: string
+    website_id: string
+  }
+
+  export type website_alertCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    website_id?: SortOrder
+  }
+
+  export type website_alertMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    website_id?: SortOrder
+  }
+
+  export type website_alertMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    website_id?: SortOrder
+  }
+
   export type regionCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -6214,11 +7519,6 @@ export namespace Prisma {
   export type RegionScalarRelationFilter = {
     is?: regionWhereInput
     isNot?: regionWhereInput
-  }
-
-  export type WebsiteScalarRelationFilter = {
-    is?: websiteWhereInput
-    isNot?: websiteWhereInput
   }
 
   export type website_tickCountOrderByAggregateInput = {
@@ -6328,6 +7628,19 @@ export namespace Prisma {
     deleteMany?: websiteScalarWhereInput | websiteScalarWhereInput[]
   }
 
+  export type userCreateNestedOneWithoutWebsitesInput = {
+    create?: XOR<userCreateWithoutWebsitesInput, userUncheckedCreateWithoutWebsitesInput>
+    connectOrCreate?: userCreateOrConnectWithoutWebsitesInput
+    connect?: userWhereUniqueInput
+  }
+
+  export type website_alertCreateNestedManyWithoutWebsiteInput = {
+    create?: XOR<website_alertCreateWithoutWebsiteInput, website_alertUncheckedCreateWithoutWebsiteInput> | website_alertCreateWithoutWebsiteInput[] | website_alertUncheckedCreateWithoutWebsiteInput[]
+    connectOrCreate?: website_alertCreateOrConnectWithoutWebsiteInput | website_alertCreateOrConnectWithoutWebsiteInput[]
+    createMany?: website_alertCreateManyWebsiteInputEnvelope
+    connect?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
+  }
+
   export type website_tickCreateNestedManyWithoutWebsiteInput = {
     create?: XOR<website_tickCreateWithoutWebsiteInput, website_tickUncheckedCreateWithoutWebsiteInput> | website_tickCreateWithoutWebsiteInput[] | website_tickUncheckedCreateWithoutWebsiteInput[]
     connectOrCreate?: website_tickCreateOrConnectWithoutWebsiteInput | website_tickCreateOrConnectWithoutWebsiteInput[]
@@ -6335,10 +7648,11 @@ export namespace Prisma {
     connect?: website_tickWhereUniqueInput | website_tickWhereUniqueInput[]
   }
 
-  export type userCreateNestedOneWithoutWebsitesInput = {
-    create?: XOR<userCreateWithoutWebsitesInput, userUncheckedCreateWithoutWebsitesInput>
-    connectOrCreate?: userCreateOrConnectWithoutWebsitesInput
-    connect?: userWhereUniqueInput
+  export type website_alertUncheckedCreateNestedManyWithoutWebsiteInput = {
+    create?: XOR<website_alertCreateWithoutWebsiteInput, website_alertUncheckedCreateWithoutWebsiteInput> | website_alertCreateWithoutWebsiteInput[] | website_alertUncheckedCreateWithoutWebsiteInput[]
+    connectOrCreate?: website_alertCreateOrConnectWithoutWebsiteInput | website_alertCreateOrConnectWithoutWebsiteInput[]
+    createMany?: website_alertCreateManyWebsiteInputEnvelope
+    connect?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
   }
 
   export type website_tickUncheckedCreateNestedManyWithoutWebsiteInput = {
@@ -6350,6 +7664,28 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type userUpdateOneRequiredWithoutWebsitesNestedInput = {
+    create?: XOR<userCreateWithoutWebsitesInput, userUncheckedCreateWithoutWebsitesInput>
+    connectOrCreate?: userCreateOrConnectWithoutWebsitesInput
+    upsert?: userUpsertWithoutWebsitesInput
+    connect?: userWhereUniqueInput
+    update?: XOR<XOR<userUpdateToOneWithWhereWithoutWebsitesInput, userUpdateWithoutWebsitesInput>, userUncheckedUpdateWithoutWebsitesInput>
+  }
+
+  export type website_alertUpdateManyWithoutWebsiteNestedInput = {
+    create?: XOR<website_alertCreateWithoutWebsiteInput, website_alertUncheckedCreateWithoutWebsiteInput> | website_alertCreateWithoutWebsiteInput[] | website_alertUncheckedCreateWithoutWebsiteInput[]
+    connectOrCreate?: website_alertCreateOrConnectWithoutWebsiteInput | website_alertCreateOrConnectWithoutWebsiteInput[]
+    upsert?: website_alertUpsertWithWhereUniqueWithoutWebsiteInput | website_alertUpsertWithWhereUniqueWithoutWebsiteInput[]
+    createMany?: website_alertCreateManyWebsiteInputEnvelope
+    set?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
+    disconnect?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
+    delete?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
+    connect?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
+    update?: website_alertUpdateWithWhereUniqueWithoutWebsiteInput | website_alertUpdateWithWhereUniqueWithoutWebsiteInput[]
+    updateMany?: website_alertUpdateManyWithWhereWithoutWebsiteInput | website_alertUpdateManyWithWhereWithoutWebsiteInput[]
+    deleteMany?: website_alertScalarWhereInput | website_alertScalarWhereInput[]
   }
 
   export type website_tickUpdateManyWithoutWebsiteNestedInput = {
@@ -6366,12 +7702,18 @@ export namespace Prisma {
     deleteMany?: website_tickScalarWhereInput | website_tickScalarWhereInput[]
   }
 
-  export type userUpdateOneRequiredWithoutWebsitesNestedInput = {
-    create?: XOR<userCreateWithoutWebsitesInput, userUncheckedCreateWithoutWebsitesInput>
-    connectOrCreate?: userCreateOrConnectWithoutWebsitesInput
-    upsert?: userUpsertWithoutWebsitesInput
-    connect?: userWhereUniqueInput
-    update?: XOR<XOR<userUpdateToOneWithWhereWithoutWebsitesInput, userUpdateWithoutWebsitesInput>, userUncheckedUpdateWithoutWebsitesInput>
+  export type website_alertUncheckedUpdateManyWithoutWebsiteNestedInput = {
+    create?: XOR<website_alertCreateWithoutWebsiteInput, website_alertUncheckedCreateWithoutWebsiteInput> | website_alertCreateWithoutWebsiteInput[] | website_alertUncheckedCreateWithoutWebsiteInput[]
+    connectOrCreate?: website_alertCreateOrConnectWithoutWebsiteInput | website_alertCreateOrConnectWithoutWebsiteInput[]
+    upsert?: website_alertUpsertWithWhereUniqueWithoutWebsiteInput | website_alertUpsertWithWhereUniqueWithoutWebsiteInput[]
+    createMany?: website_alertCreateManyWebsiteInputEnvelope
+    set?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
+    disconnect?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
+    delete?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
+    connect?: website_alertWhereUniqueInput | website_alertWhereUniqueInput[]
+    update?: website_alertUpdateWithWhereUniqueWithoutWebsiteInput | website_alertUpdateWithWhereUniqueWithoutWebsiteInput[]
+    updateMany?: website_alertUpdateManyWithWhereWithoutWebsiteInput | website_alertUpdateManyWithWhereWithoutWebsiteInput[]
+    deleteMany?: website_alertScalarWhereInput | website_alertScalarWhereInput[]
   }
 
   export type website_tickUncheckedUpdateManyWithoutWebsiteNestedInput = {
@@ -6386,6 +7728,20 @@ export namespace Prisma {
     update?: website_tickUpdateWithWhereUniqueWithoutWebsiteInput | website_tickUpdateWithWhereUniqueWithoutWebsiteInput[]
     updateMany?: website_tickUpdateManyWithWhereWithoutWebsiteInput | website_tickUpdateManyWithWhereWithoutWebsiteInput[]
     deleteMany?: website_tickScalarWhereInput | website_tickScalarWhereInput[]
+  }
+
+  export type websiteCreateNestedOneWithoutAlertsInput = {
+    create?: XOR<websiteCreateWithoutAlertsInput, websiteUncheckedCreateWithoutAlertsInput>
+    connectOrCreate?: websiteCreateOrConnectWithoutAlertsInput
+    connect?: websiteWhereUniqueInput
+  }
+
+  export type websiteUpdateOneRequiredWithoutAlertsNestedInput = {
+    create?: XOR<websiteCreateWithoutAlertsInput, websiteUncheckedCreateWithoutAlertsInput>
+    connectOrCreate?: websiteCreateOrConnectWithoutAlertsInput
+    upsert?: websiteUpsertWithoutAlertsInput
+    connect?: websiteWhereUniqueInput
+    update?: XOR<XOR<websiteUpdateToOneWithWhereWithoutAlertsInput, websiteUpdateWithoutAlertsInput>, websiteUncheckedUpdateWithoutAlertsInput>
   }
 
   export type website_tickCreateNestedManyWithoutRegionInput = {
@@ -6585,6 +7941,7 @@ export namespace Prisma {
     id?: string
     url: string
     time_added: Date | string
+    alerts?: website_alertCreateNestedManyWithoutWebsiteInput
     ticks?: website_tickCreateNestedManyWithoutWebsiteInput
   }
 
@@ -6592,6 +7949,7 @@ export namespace Prisma {
     id?: string
     url: string
     time_added: Date | string
+    alerts?: website_alertUncheckedCreateNestedManyWithoutWebsiteInput
     ticks?: website_tickUncheckedCreateNestedManyWithoutWebsiteInput
   }
 
@@ -6631,6 +7989,43 @@ export namespace Prisma {
     time_added?: DateTimeFilter<"website"> | Date | string
   }
 
+  export type userCreateWithoutWebsitesInput = {
+    id?: string
+    username: string
+    password: string
+  }
+
+  export type userUncheckedCreateWithoutWebsitesInput = {
+    id?: string
+    username: string
+    password: string
+  }
+
+  export type userCreateOrConnectWithoutWebsitesInput = {
+    where: userWhereUniqueInput
+    create: XOR<userCreateWithoutWebsitesInput, userUncheckedCreateWithoutWebsitesInput>
+  }
+
+  export type website_alertCreateWithoutWebsiteInput = {
+    id?: string
+    email: string
+  }
+
+  export type website_alertUncheckedCreateWithoutWebsiteInput = {
+    id?: string
+    email: string
+  }
+
+  export type website_alertCreateOrConnectWithoutWebsiteInput = {
+    where: website_alertWhereUniqueInput
+    create: XOR<website_alertCreateWithoutWebsiteInput, website_alertUncheckedCreateWithoutWebsiteInput>
+  }
+
+  export type website_alertCreateManyWebsiteInputEnvelope = {
+    data: website_alertCreateManyWebsiteInput | website_alertCreateManyWebsiteInput[]
+    skipDuplicates?: boolean
+  }
+
   export type website_tickCreateWithoutWebsiteInput = {
     id?: string
     response_time_ms: number
@@ -6657,21 +8052,52 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type userCreateWithoutWebsitesInput = {
-    id?: string
-    username: string
-    password: string
-  }
-
-  export type userUncheckedCreateWithoutWebsitesInput = {
-    id?: string
-    username: string
-    password: string
-  }
-
-  export type userCreateOrConnectWithoutWebsitesInput = {
-    where: userWhereUniqueInput
+  export type userUpsertWithoutWebsitesInput = {
+    update: XOR<userUpdateWithoutWebsitesInput, userUncheckedUpdateWithoutWebsitesInput>
     create: XOR<userCreateWithoutWebsitesInput, userUncheckedCreateWithoutWebsitesInput>
+    where?: userWhereInput
+  }
+
+  export type userUpdateToOneWithWhereWithoutWebsitesInput = {
+    where?: userWhereInput
+    data: XOR<userUpdateWithoutWebsitesInput, userUncheckedUpdateWithoutWebsitesInput>
+  }
+
+  export type userUpdateWithoutWebsitesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type userUncheckedUpdateWithoutWebsitesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type website_alertUpsertWithWhereUniqueWithoutWebsiteInput = {
+    where: website_alertWhereUniqueInput
+    update: XOR<website_alertUpdateWithoutWebsiteInput, website_alertUncheckedUpdateWithoutWebsiteInput>
+    create: XOR<website_alertCreateWithoutWebsiteInput, website_alertUncheckedCreateWithoutWebsiteInput>
+  }
+
+  export type website_alertUpdateWithWhereUniqueWithoutWebsiteInput = {
+    where: website_alertWhereUniqueInput
+    data: XOR<website_alertUpdateWithoutWebsiteInput, website_alertUncheckedUpdateWithoutWebsiteInput>
+  }
+
+  export type website_alertUpdateManyWithWhereWithoutWebsiteInput = {
+    where: website_alertScalarWhereInput
+    data: XOR<website_alertUpdateManyMutationInput, website_alertUncheckedUpdateManyWithoutWebsiteInput>
+  }
+
+  export type website_alertScalarWhereInput = {
+    AND?: website_alertScalarWhereInput | website_alertScalarWhereInput[]
+    OR?: website_alertScalarWhereInput[]
+    NOT?: website_alertScalarWhereInput | website_alertScalarWhereInput[]
+    id?: StringFilter<"website_alert"> | string
+    email?: StringFilter<"website_alert"> | string
+    website_id?: StringFilter<"website_alert"> | string
   }
 
   export type website_tickUpsertWithWhereUniqueWithoutWebsiteInput = {
@@ -6702,27 +8128,52 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"website_tick"> | Date | string
   }
 
-  export type userUpsertWithoutWebsitesInput = {
-    update: XOR<userUpdateWithoutWebsitesInput, userUncheckedUpdateWithoutWebsitesInput>
-    create: XOR<userCreateWithoutWebsitesInput, userUncheckedCreateWithoutWebsitesInput>
-    where?: userWhereInput
+  export type websiteCreateWithoutAlertsInput = {
+    id?: string
+    url: string
+    time_added: Date | string
+    user: userCreateNestedOneWithoutWebsitesInput
+    ticks?: website_tickCreateNestedManyWithoutWebsiteInput
   }
 
-  export type userUpdateToOneWithWhereWithoutWebsitesInput = {
-    where?: userWhereInput
-    data: XOR<userUpdateWithoutWebsitesInput, userUncheckedUpdateWithoutWebsitesInput>
+  export type websiteUncheckedCreateWithoutAlertsInput = {
+    id?: string
+    url: string
+    user_id: string
+    time_added: Date | string
+    ticks?: website_tickUncheckedCreateNestedManyWithoutWebsiteInput
   }
 
-  export type userUpdateWithoutWebsitesInput = {
+  export type websiteCreateOrConnectWithoutAlertsInput = {
+    where: websiteWhereUniqueInput
+    create: XOR<websiteCreateWithoutAlertsInput, websiteUncheckedCreateWithoutAlertsInput>
+  }
+
+  export type websiteUpsertWithoutAlertsInput = {
+    update: XOR<websiteUpdateWithoutAlertsInput, websiteUncheckedUpdateWithoutAlertsInput>
+    create: XOR<websiteCreateWithoutAlertsInput, websiteUncheckedCreateWithoutAlertsInput>
+    where?: websiteWhereInput
+  }
+
+  export type websiteUpdateToOneWithWhereWithoutAlertsInput = {
+    where?: websiteWhereInput
+    data: XOR<websiteUpdateWithoutAlertsInput, websiteUncheckedUpdateWithoutAlertsInput>
+  }
+
+  export type websiteUpdateWithoutAlertsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    time_added?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: userUpdateOneRequiredWithoutWebsitesNestedInput
+    ticks?: website_tickUpdateManyWithoutWebsiteNestedInput
   }
 
-  export type userUncheckedUpdateWithoutWebsitesInput = {
+  export type websiteUncheckedUpdateWithoutAlertsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    time_added?: DateTimeFieldUpdateOperationsInput | Date | string
+    ticks?: website_tickUncheckedUpdateManyWithoutWebsiteNestedInput
   }
 
   export type website_tickCreateWithoutRegionInput = {
@@ -6787,6 +8238,7 @@ export namespace Prisma {
     url: string
     time_added: Date | string
     user: userCreateNestedOneWithoutWebsitesInput
+    alerts?: website_alertCreateNestedManyWithoutWebsiteInput
   }
 
   export type websiteUncheckedCreateWithoutTicksInput = {
@@ -6794,6 +8246,7 @@ export namespace Prisma {
     url: string
     user_id: string
     time_added: Date | string
+    alerts?: website_alertUncheckedCreateNestedManyWithoutWebsiteInput
   }
 
   export type websiteCreateOrConnectWithoutTicksInput = {
@@ -6838,6 +8291,7 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     time_added?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: userUpdateOneRequiredWithoutWebsitesNestedInput
+    alerts?: website_alertUpdateManyWithoutWebsiteNestedInput
   }
 
   export type websiteUncheckedUpdateWithoutTicksInput = {
@@ -6845,6 +8299,7 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     time_added?: DateTimeFieldUpdateOperationsInput | Date | string
+    alerts?: website_alertUncheckedUpdateManyWithoutWebsiteNestedInput
   }
 
   export type websiteCreateManyUserInput = {
@@ -6857,6 +8312,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     time_added?: DateTimeFieldUpdateOperationsInput | Date | string
+    alerts?: website_alertUpdateManyWithoutWebsiteNestedInput
     ticks?: website_tickUpdateManyWithoutWebsiteNestedInput
   }
 
@@ -6864,6 +8320,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     time_added?: DateTimeFieldUpdateOperationsInput | Date | string
+    alerts?: website_alertUncheckedUpdateManyWithoutWebsiteNestedInput
     ticks?: website_tickUncheckedUpdateManyWithoutWebsiteNestedInput
   }
 
@@ -6873,12 +8330,32 @@ export namespace Prisma {
     time_added?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type website_alertCreateManyWebsiteInput = {
+    id?: string
+    email: string
+  }
+
   export type website_tickCreateManyWebsiteInput = {
     id?: string
     response_time_ms: number
     status: $Enums.website_status
     region_id: string
     createdAt?: Date | string
+  }
+
+  export type website_alertUpdateWithoutWebsiteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type website_alertUncheckedUpdateWithoutWebsiteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type website_alertUncheckedUpdateManyWithoutWebsiteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
   }
 
   export type website_tickUpdateWithoutWebsiteInput = {

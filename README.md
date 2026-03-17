@@ -44,9 +44,9 @@ graph TD
     *   Ensures that every website is checked on a configurable interval (currently ~30s).
 
 4.  **`apps/worker` (Monitoring Agent)**:
-    *   A high-performance agent that pulls tasks from the Redis Stream using **Consumer Groups**.
+    *   A high-performance agent that pulls tasks from the Redis Stream using **Consumer Groups** (automatically creates groups if they don't exist).
     *   Performs HTTP GET requests and records "ticks" (status + latency) in the PostgreSQL database.
-    *   **Alerting Engine**: Detects status transitions (Up -> Down or Down -> Up) and triggers email notifications via **Nodemailer**.
+    *   **Alerting Engine**: Detects status transitions (Up -> Down or Down -> Up) and triggers email notifications via **Nodemailer**. Alerts are scoped and sent to the website owner and any configured alert contacts.
 
 5.  **`packages/store`**:
     *   Shared database logic using **Prisma 7**.
@@ -86,14 +86,17 @@ graph TD
 4.  **Start all services**: From the root, run `bun run dev`
 
 ### 📧 Configuring Alerts
-To enable real email alerts, add the following to `apps/worker/.env`:
+To enable real email alerts (e.g., via Gmail), add the following to `apps/worker/.env`:
 ```env
 EMAIL_ENABLED=true
-SMTP_HOST=your-smtp-host
+SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=your-user
-SMTP_PASS=your-password
+SMTP_USER=your-account@gmail.com
+SMTP_PASS=your-16-char-app-password
 ```
+> **Note**: For Gmail, use an **App Password** generated from your Google Account settings, not your regular login password.
+
+Alerts will be sent automatically to the email of the user who registered the website, as well as to any extra alert contacts configured via the API.
 
 ---
 
